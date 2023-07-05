@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">chatX</string>
+    <string name="messenger">Messenger</string>
+    <string name="your_email">Your email:</string>
+    <string name="password">Password:</string>
+    <string name="login">LOGIN</string>
+    <string name="reset_password">Reset password</string>
+    <string name="register">Register</string>
+</resources>
