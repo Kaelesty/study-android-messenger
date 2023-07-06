@@ -28,7 +28,7 @@ public class LoginViewModel extends AndroidViewModel {
         return authentification;
     }
 
-    public void login(UserInput user) {
+    public void login(LoginInput user) {
         auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override

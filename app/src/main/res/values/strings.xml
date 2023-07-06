@@ -6,4 +6,9 @@
     <string name="login">LOGIN</string>
     <string name="reset_password">Reset password</string>
     <string name="register">Register</string>
+    <string name="registration">Registration</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last name</string>
+    <string name="age">Age</string>
+    <string name="password_reset">Password reset</string>
 </resources>

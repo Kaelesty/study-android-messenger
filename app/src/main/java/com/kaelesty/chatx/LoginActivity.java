@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
@@ -76,12 +74,12 @@ public class LoginActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
     }
 
-    private UserInput getUserInput() {
-        return new UserInput(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+    private LoginInput getUserInput() {
+        return new LoginInput(editTextEmail.getText().toString(), editTextPassword.getText().toString());
     }
 
     private void login() {
-        UserInput user = getUserInput();
+        LoginInput user = getUserInput();
         if (!user.validate()) {
             Toast.makeText(this, "Invalid input!", Toast.LENGTH_LONG).show();
             return;

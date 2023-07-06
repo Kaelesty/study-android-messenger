@@ -1,10 +1,10 @@
 package com.kaelesty.chatx;
 
-public class UserInput {
+public class LoginInput {
     private String email;
     private String password;
 
-    public UserInput(String email, String password) {
+    public LoginInput(String email, String password) {
         this.email = email.trim();
         this.password = password.trim();
     }
