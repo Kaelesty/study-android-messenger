@@ -19,31 +19,11 @@
         android:textColor="@android:color/holo_purple"/>
 
     <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/your_email"
-        android:layout_marginTop="128sp"
-        android:layout_marginHorizontal="48dp"
-        android:inputType="textEmailAddress"
-        />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:layout_marginTop="4sp"
-        android:layout_marginHorizontal="48dp"
-        android:inputType="textPassword"
-        />
-
-    <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="128sp"
         android:hint="@string/name"
-        android:layout_marginTop="4sp"
         android:layout_marginHorizontal="48dp"
         android:inputType="textPersonName"
         />
@@ -67,6 +47,24 @@
         android:layout_marginHorizontal="48dp"
         android:inputType="numberDecimal"
         />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:hint="@string/your_email"
+        android:layout_marginTop="4sp"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginTop="4sp"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/buttonRegister"
