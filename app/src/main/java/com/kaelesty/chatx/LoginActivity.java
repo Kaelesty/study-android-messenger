@@ -53,19 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getAuthentification().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean authentification) {
-                if (authentification != null) {
-                    if (authentification) {
-                        startActivity(MainActivity.newIntent(LoginActivity.this));
-                    }
-                    else {
-                        Toast.makeText(LoginActivity.this, "Authorization error", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
+        observeViewModel();
     }
 
     private void initViews() {
@@ -76,21 +64,36 @@ public class LoginActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
     }
 
+    private void observeViewModel() {
+        viewModel.getAuthentification().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean authentification) {
+                if (authentification != null) {
+                    if (authentification) {
+                        startActivity(MainActivity.newIntent(LoginActivity.this));
+                    }
+                }
+            }
+        });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private LoginInput getUserInput() {
         return new LoginInput(editTextEmail.getText().toString(), editTextPassword.getText().toString());
     }
 
     private void login() {
-        LoginInput user = getUserInput();
-        if (!user.validate()) {
-            Toast.makeText(this, "Invalid input!", Toast.LENGTH_LONG).show();
-            return;
-        }
-        viewModel.login(user);
+        viewModel.login(getUserInput());
     }
 
     private void resetPassword() {
-        startActivity(ResetPasswordActivity.newIntent(this));
+        startActivity(ResetPasswordActivity.newIntent(this, getUserInput()));
     }
 
     private void register() {

@@ -17,13 +17,20 @@ public class RegisterViewlModel extends AndroidViewModel {
     private FirebaseAuth auth;
 
     private MutableLiveData<Boolean> isAuthSuccessful = new MutableLiveData<>();
+    private MutableLiveData<String> error = new MutableLiveData<>();
 
     public RegisterViewlModel(@NonNull Application application) {
         super(application);
         auth = FirebaseAuth.getInstance();
     }
 
+    public LiveData<String> getError() { return error; }
+
     public void register(RegisterInput user) {
+        if (!user.validate()) {
+            error.postValue("Invalid input");
+            return;
+        }
         auth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -34,7 +41,7 @@ public class RegisterViewlModel extends AndroidViewModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        isAuthSuccessful.postValue(false);
+                        error.postValue("Wrong data or server error");
                     }
                 });
     }

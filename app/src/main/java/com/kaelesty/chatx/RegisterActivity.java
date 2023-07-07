@@ -38,19 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        viewlModel.getIsAuthSuccessful().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isSuccessful) {
-                if (isSuccessful != null) {
-                    if (isSuccessful) {
-                        startActivity(MainActivity.newIntent(getApplication()));
-                    }
-                    else {
-                        Toast.makeText(RegisterActivity.this, "Registration error", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
+        observeViewModel();
     }
 
     private void initViews() {
@@ -60,6 +48,26 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextAge = findViewById(R.id.editTextAge);
         buttonRegister = findViewById(R.id.buttonRegister);
+    }
+
+    private void observeViewModel() {
+        viewlModel.getIsAuthSuccessful().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSuccessful) {
+                if (isSuccessful != null) {
+                    if (isSuccessful) {
+                        startActivity(MainActivity.newIntent(getApplication()));
+                    }
+                }
+            }
+        });
+
+        viewlModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(RegisterActivity.this, s, Toast.LENGTH_LONG);
+            }
+        });
     }
 
     private RegisterInput getRegisterInput() {
@@ -73,12 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register() {
-        RegisterInput user = getRegisterInput();
-        if (!user.validate()) {
-            Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG).show();
-            return;
-        }
-        viewlModel.register(user);
+        viewlModel.register(getRegisterInput());
     }
 
 

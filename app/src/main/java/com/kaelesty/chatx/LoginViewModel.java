@@ -17,6 +17,7 @@ public class LoginViewModel extends AndroidViewModel {
     private final FirebaseAuth auth;
 
     private final MutableLiveData<Boolean> authentification = new MutableLiveData<>();
+    private final MutableLiveData<String> error = new MutableLiveData<>();
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -28,7 +29,13 @@ public class LoginViewModel extends AndroidViewModel {
         return authentification;
     }
 
+    public LiveData<String> getError() { return error; }
+
     public void login(LoginInput user) {
+        if (!user.validate()) {
+            error.postValue("Invalid input");
+            return;
+        }
         auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -40,6 +47,7 @@ public class LoginViewModel extends AndroidViewModel {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         authentification.postValue(false);
+                        error.postValue("Wrong data or server error");
                     }
                 });
     }

@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
+    public static final String EXTRA_EMAIL = "email";
+
     private EditText editTextEmail;
     private Button buttonReset;
 
@@ -24,6 +26,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         initViews();
+
+        String email = getIntent().getStringExtra(EXTRA_EMAIL);
+        if (email != null) {
+            editTextEmail.setText(email);
+        }
 
         viewModel = new ViewModelProvider(this).get(ResetPasswordViewModel.class);
 
@@ -66,7 +73,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         buttonReset = findViewById(R.id.buttonResetPassword);
     }
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, ResetPasswordActivity.class);
+    public static Intent newIntent(Context context, LoginInput user) {
+        Intent intent = new Intent(context, ResetPasswordActivity.class);
+        intent.putExtra(EXTRA_EMAIL, user.getEmail());
+        return intent;
     }
 }
