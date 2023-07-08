@@ -11,4 +11,5 @@
     <string name="last_name">Last name</string>
     <string name="age">Age</string>
     <string name="password_reset">Password reset</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

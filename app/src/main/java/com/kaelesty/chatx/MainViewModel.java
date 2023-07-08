@@ -13,29 +13,21 @@ public class MainViewModel extends AndroidViewModel {
 
     private FirebaseAuth auth;
 
-    private MutableLiveData<Boolean> isUserAuth = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isAuth = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         auth = FirebaseAuth.getInstance();
-
-        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                isUserAuth.postValue(firebaseAuth.getCurrentUser() != null);
-            }
-        });
     }
 
-    public LiveData<Boolean> getIsUserAuth() {
-        return isUserAuth;
+    public void checkAuth() {
+        if (auth.getCurrentUser() == null) {
+            isAuth.postValue(false);
+        }
+        else {
+            isAuth.postValue(true);
+        }
     }
 
-    public void signOut() {
-        auth.signOut();
-    }
-
-    public String getUserEmail() {
-        return auth.getCurrentUser().getEmail();
-    }
+    public LiveData<Boolean> getIsAuth() { return isAuth; }
 }

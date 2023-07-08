@@ -41,7 +41,7 @@ public class RegisterViewlModel extends AndroidViewModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        error.postValue("Wrong data or server error");
+                        error.postValue(e.toString());
                     }
                 });
     }

@@ -27,24 +27,18 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        TextView tw = findViewById(R.id.textView);
+        viewModel.checkAuth();
 
-        tw.setOnClickListener(new View.OnClickListener() {
+        viewModel.getIsAuth().observe(this, new Observer<Boolean>() {
             @Override
-            public void onClick(View v) {
-                viewModel.signOut();
-            }
-        });
-
-        viewModel.getIsUserAuth().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isAuth) {
-                if (isAuth) {
-                    tw.setText("User " + viewModel.getUserEmail());
+            public void onChanged(Boolean auth) {
+                if (auth) {
+                    startActivity(UsersActivity.newIntent(MainActivity.this));
                 }
                 else {
-                    startActivity(LoginActivity.newIntent(getApplication()));
+                    startActivity(LoginActivity.newIntent(MainActivity.this));
                 }
+                finish();
             }
         });
     }

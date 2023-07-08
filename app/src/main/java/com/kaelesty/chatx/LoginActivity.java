@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
@@ -65,13 +67,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-        viewModel.getAuthentification().observe(this, new Observer<Boolean>() {
+        viewModel.getAuthentification().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onChanged(Boolean authentification) {
+            public void onChanged(FirebaseUser authentification) {
                 if (authentification != null) {
-                    if (authentification) {
-                        startActivity(MainActivity.newIntent(LoginActivity.this));
-                    }
+                    startActivity(MainActivity.newIntent(LoginActivity.this));
+                    finish();
                 }
             }
         });
@@ -79,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                if (s == null) {
+                    return;
+                }
                 Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
