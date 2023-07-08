@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class UsersActivity extends AppCompatActivity {
+
+    public static final String TAG = "UsersActivity";
 
     private UsersViewModel viewModel;
 
@@ -47,6 +52,15 @@ public class UsersActivity extends AppCompatActivity {
                     startActivity(MainActivity.newIntent(UsersActivity.this));
                     finish();
                 }
+            }
+        });
+        viewModel.getUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                for (User user : users) {
+                    Log.d(TAG, user.toString());
+                }
+                adapter.setUsers(users);
             }
         });
     }

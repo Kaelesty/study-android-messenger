@@ -21,6 +21,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
     public void setUsers(List<User> users) {
         this.users = users;
+        notifyDataSetChanged();
     }
 
     public void setOnUserClickListener(OnUserClickListener onUserClickListener) {

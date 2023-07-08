@@ -11,10 +11,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterViewlModel extends AndroidViewModel {
 
     private FirebaseAuth auth;
+    private FirebaseDatabase db;
 
     private MutableLiveData<Boolean> isAuthSuccessful = new MutableLiveData<>();
     private MutableLiveData<String> error = new MutableLiveData<>();
@@ -22,19 +26,32 @@ public class RegisterViewlModel extends AndroidViewModel {
     public RegisterViewlModel(@NonNull Application application) {
         super(application);
         auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
     }
 
     public LiveData<String> getError() { return error; }
 
-    public void register(RegisterInput user) {
-        if (!user.validate()) {
+    public void register(RegisterInput input) {
+        if (!input.validate()) {
             error.postValue("Invalid input");
             return;
         }
-        auth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+        auth.createUserWithEmailAndPassword(input.getEmail(), input.getPassword())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+
+                        DatabaseReference dbRef = db.getReference("Users");
+
+                        User user = input.toUser();
+                        FirebaseUser firebaseUser = authResult.getUser();
+                        if (firebaseUser == null) {
+                            return;
+                        }
+                        user.setId(firebaseUser.getUid());
+
+                        dbRef.child(firebaseUser.getUid()).setValue(user);
+
                         isAuthSuccessful.postValue(true);
                     }
                 })

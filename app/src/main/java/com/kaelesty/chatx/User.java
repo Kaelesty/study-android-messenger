@@ -35,4 +35,26 @@ public class User {
         this.age = age;
         this.isOnline = isOnline;
     }
+
+    public User() {
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setIsOnline(Boolean isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                ", isOnline=" + isOnline +
+                '}';
+    }
 }

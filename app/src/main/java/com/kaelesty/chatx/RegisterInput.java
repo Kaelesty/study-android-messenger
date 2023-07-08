@@ -44,4 +44,14 @@ public class RegisterInput {
         }
         return true;
     }
+
+    public User toUser() {
+        return new User(
+            "0",
+                name,
+                lastname,
+                age,
+                false
+        );
+    }
 }
