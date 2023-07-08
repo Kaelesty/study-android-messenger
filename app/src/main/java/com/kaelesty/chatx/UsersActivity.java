@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,13 +18,25 @@ public class UsersActivity extends AppCompatActivity {
 
     private UsersViewModel viewModel;
 
+    private RecyclerView recyclerViewUsers;
+    private UsersAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
+        adapter = new UsersAdapter();
+
+        initViews();
         observeViewModel();
+
+        recyclerViewUsers.setAdapter(adapter);
+    }
+
+    private void initViews() {
+        recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
     }
 
     private void observeViewModel() {
