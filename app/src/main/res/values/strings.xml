@@ -12,4 +12,6 @@
     <string name="age">Age</string>
     <string name="password_reset">Password reset</string>
     <string name="sign_out">Sign Out</string>
+    <string name="long_text">Violet is a genus of plants in the Violet family. About five hundred species are known, growing mainly in the Northern Hemisphere - in the mountains and in regions with a temperate climate.</string>
+    <string name="enter_your_message">Enter your message...</string>
 </resources>

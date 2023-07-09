@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="whitely_background">#11000099</color>
+    <color name="other_message">#ffb6c1</color>
+    <color name="my_message">#90ee90</color>
 </resources>
