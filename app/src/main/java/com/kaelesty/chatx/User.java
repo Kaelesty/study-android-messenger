@@ -1,12 +1,14 @@
 package com.kaelesty.chatx;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String id;
     private String name;
     private String lastname;
     private int age;
-    private boolean isOnline;
+    private boolean online;
 
     public String getId() {
         return id;
@@ -25,7 +27,7 @@ public class User {
     }
 
     public boolean isOnline() {
-        return isOnline;
+        return online;
     }
 
     public User(String id, String name, String lastname, int age, boolean isOnline) {
@@ -33,7 +35,7 @@ public class User {
         this.name = name;
         this.lastname = lastname;
         this.age = age;
-        this.isOnline = isOnline;
+        this.online = isOnline;
     }
 
     public User() {
@@ -43,9 +45,6 @@ public class User {
         this.id = id;
     }
 
-    public void setIsOnline(Boolean isOnline) {
-        this.isOnline = isOnline;
-    }
 
     @Override
     public String toString() {
@@ -54,7 +53,11 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", isOnline=" + isOnline +
+                ", isOnline=" + online +
                 '}';
+    }
+
+    public String toTitle() {
+        return name + " " + lastname + ", " + String.valueOf(age);
     }
 }

@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.checkAuth();
 
-        viewModel.getIsAuth().observe(this, new Observer<Boolean>() {
+        viewModel.getIsAuth().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onChanged(Boolean auth) {
-                if (auth) {
-                    startActivity(UsersActivity.newIntent(MainActivity.this));
+            public void onChanged(FirebaseUser user) {
+                if (user != null) {
+                    startActivity(UsersActivity.newIntent(MainActivity.this, user.getUid()));
                 }
                 else {
                     startActivity(LoginActivity.newIntent(MainActivity.this));

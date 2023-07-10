@@ -63,7 +63,6 @@ public class LoginViewModel extends AndroidViewModel {
                                 if (user == null) {
                                     return;
                                 }
-                                user.setIsOnline(true);
                                 dbRef.child("Users").child(firebaseUser.getUid()).setValue(user);
                             }
                         });

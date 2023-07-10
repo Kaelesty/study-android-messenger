@@ -21,10 +21,14 @@ public class UsersActivity extends AppCompatActivity {
 
     public static final String TAG = "UsersActivity";
 
+    public static final String CURRENT_USER_EXTRA = "current";
+
     private UsersViewModel viewModel;
 
     private RecyclerView recyclerViewUsers;
     private UsersAdapter adapter;
+
+    private String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,25 @@ public class UsersActivity extends AppCompatActivity {
 
         initViews();
         observeViewModel();
+        unpackExtras();
+
+        adapter.setOnUserClickListener(new UsersAdapter.OnUserClickListener() {
+            @Override
+            public void onUserClick(User otherUser) {
+                Intent intent = ChatActivity.newIntent(
+                        UsersActivity.this,
+                        currentUserID,
+                        otherUser.getId());
+                startActivity(intent);
+            }
+        });
 
         recyclerViewUsers.setAdapter(adapter);
+    }
+
+    private void unpackExtras() {
+        Intent intent = getIntent();
+        currentUserID = intent.getStringExtra(CURRENT_USER_EXTRA);
     }
 
     private void initViews() {
@@ -75,11 +96,26 @@ public class UsersActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.itemSignout) {
             viewModel.signOut();
+            viewModel.setIsOnline(false);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, UsersActivity.class);
+    public static Intent newIntent(Context context, String currentUserID) {
+        Intent intent = new Intent(context, UsersActivity.class);
+        intent.putExtra(CURRENT_USER_EXTRA, currentUserID);
+        return intent;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewModel.setIsOnline(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.setIsOnline(true);
     }
 }

@@ -56,7 +56,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onUserClickListener.onUserClick();
+                    onUserClickListener.onUserClick(user);
                 }
             });
         }
@@ -68,7 +68,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
     }
 
     public interface OnUserClickListener {
-        void onUserClick();
+        void onUserClick(User user);
     }
 
     public class UsersViewHolder extends RecyclerView.ViewHolder {

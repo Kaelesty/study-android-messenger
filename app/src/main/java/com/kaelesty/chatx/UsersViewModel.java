@@ -82,4 +82,11 @@ public class UsersViewModel extends AndroidViewModel {
     public void signOut() {
         auth.signOut();
     }
+
+    public void setIsOnline(boolean isOnline) {
+        db.getReference("Users")
+                .child(auth.getCurrentUser().getUid())
+                .child("online")
+                .setValue(isOnline);
+    }
 }
