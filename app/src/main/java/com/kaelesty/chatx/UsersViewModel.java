@@ -32,11 +32,15 @@ public class UsersViewModel extends AndroidViewModel {
     private MutableLiveData<FirebaseUser> user = new MutableLiveData<>();
     private MutableLiveData<List<User>> users = new MutableLiveData<>();
 
+    private String currentUserID;
+
     public UsersViewModel(@NonNull Application application) {
         super(application);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
+
+        currentUserID = auth.getCurrentUser().getUid();
 
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -85,7 +89,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void setIsOnline(boolean isOnline) {
         db.getReference("Users")
-                .child(auth.getCurrentUser().getUid())
+                .child(currentUserID)
                 .child("online")
                 .setValue(isOnline);
     }

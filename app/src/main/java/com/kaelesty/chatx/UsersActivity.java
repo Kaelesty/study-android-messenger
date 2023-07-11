@@ -95,8 +95,8 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.itemSignout) {
-            viewModel.signOut();
             viewModel.setIsOnline(false);
+            viewModel.signOut();
         }
         return super.onOptionsItemSelected(item);
     }
